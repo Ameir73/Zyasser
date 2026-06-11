@@ -9,6 +9,11 @@ WORKDIR /app
 
 # نسخ ملف المكتبات وتثبيتها
 COPY requirements.txt .
+
+# 🔥 [التعديل هنا] تحديث أداة pip أولاً لتجنب أخطاء تعارض المكتبات
+RUN pip install --no-cache-dir --upgrade pip
+
+# تثبيت المكتبات
 RUN pip install --no-cache-dir -r requirements.txt
 
 # نسخ باقي ملفات المشروع إلى السيرفر
