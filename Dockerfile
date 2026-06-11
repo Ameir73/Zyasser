@@ -15,9 +15,8 @@ WORKDIR /app
 # 4. نسخ ملف المكتبات
 COPY requirements.txt .
 
-# 5. تحديث pip وتثبيت setuptools و wheel (مهم جداً للتعامل مع الحزم المعقدة)
-RUN pip install --no-cache-dir --upgrade pip setuptools wheel
-
+# 5. تحديث pip وتثبيت setuptools و wheel (مهم جداً للتعامل مع الحزم المعقدة
+RUN pip install --no-cache-dir pyrogram==2.0.106 pytgcalls>=3.0.0 yt-dlp supabase
 # 6. تثبيت المكتبات (الآن سيجد pip النسخة المتوافقة ويثبتها بسلاسة)
 RUN pip install --no-cache-dir -r requirements.txt
 
