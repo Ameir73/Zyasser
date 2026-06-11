@@ -14,9 +14,6 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message, CallbackQuery
 from pyrogram.errors import FloodWait, UserNotParticipant, ChatAdminRequired
-from pytgcalls.types.input_stream import AudioPiped
-from pytgcalls.types.stream import StreamAudioEnded
-from pytgcalls.exceptions import NoActiveGroupCall, GroupCallNotFound
 from yt_dlp import YoutubeDL
 from functools import wraps
 import config
