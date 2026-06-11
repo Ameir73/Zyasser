@@ -23,7 +23,17 @@ from yt_dlp import YoutubeDL
 from functools import wraps
 import config
 from pytgcalls.exceptions import NoActiveGroupCall
+from pyrogram import Client
+from pytgcalls import PyTgCalls
 
+# إعداد العميل الخاص بك
+app = Client("my_bot")
+
+# تهيئة pytgcalls
+pytgcalls = PyTgCalls(app)
+
+# بدلاً من استيراد idle من pytgcalls، يمكنك استخدامها من pyrogram
+from pyrogram import idle
 # ==========================================
 # ⚙️ [ إعدادات البوت الأساسية (من بيئة التشغيل) ]
 # ==========================================
