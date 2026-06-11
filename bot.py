@@ -11,10 +11,17 @@ import yt_dlp
 from supabase import create_client, Client
 from pyrogram import Client as PyroClient, filters, idle
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
-# بدلاً من الاستيراد القديم، جرب:
-from pytgcalls import pytgcalls
-from pytgcalls.types import MediaStream # إذا استمر الخطأ، جرب السطر التالي
-# ✅ تم التعديل هنا لقراءة النظام الجديد
+from pyrogram import Client, filters
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message, CallbackQuery
+from pyrogram.errors import FloodWait, UserNotParticipant, ChatAdminRequired
+from pytgcalls import PyTgCalls, idle
+from pytgcalls.types import Update
+from pytgcalls.types.input_stream import AudioPiped
+from pytgcalls.types.stream import StreamAudioEnded
+from pytgcalls.exceptions import NoActiveGroupCall, GroupCallNotFound
+from yt_dlp import YoutubeDL
+from functools import wraps
+import config
 from pytgcalls.exceptions import NoActiveGroupCall
 
 # ==========================================
