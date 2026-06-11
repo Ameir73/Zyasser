@@ -12,7 +12,6 @@ import pytgcalls
 from supabase import create_client, Client
 from pyrogram import Client as PyroClient, filters, idle
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
-from pytgcalls import PyTgCalls
 from pytgcalls.types import MediaStream, Update  # ✅ تم التعديل هنا لقراءة النظام الجديد
 from pytgcalls.exceptions import NoActiveGroupCall
 
