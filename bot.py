@@ -12,7 +12,10 @@ import pytgcalls
 from supabase import create_client, Client
 from pyrogram import Client as PyroClient, filters, idle
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
-from pytgcalls.types import MediaStream, Update  # ✅ تم التعديل هنا لقراءة النظام الجديد
+# بدلاً من الاستيراد القديم، جرب:
+from pytgcalls import pytgcalls
+from pytgcalls.types import MediaStream # إذا استمر الخطأ، جرب السطر التالي
+# ✅ تم التعديل هنا لقراءة النظام الجديد
 from pytgcalls.exceptions import NoActiveGroupCall
 
 # ==========================================
