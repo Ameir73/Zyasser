@@ -1,27 +1,21 @@
-# 1. إجبار الدوكر على استخدام معمارية x86_64 القياسية لتجاوز مشكلة توافق tgcalls
-FROM --platform=linux/amd64 python:3.11-slim-bookworm
+# استخدام نسخة بايثون خفيفة ومستقرة
+FROM python:3.10-slim-bookworm
 
-# 2. تحديث النظام وتثبيت أداة ffmpeg الضرورية وأدوات التجميع
-RUN apt-get update && apt-get install -y \
-    ffmpeg \
-    gcc \
-    python3-dev \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
+# تثبيت أداة ffmpeg الضرورية فقط للصوت
+RUN apt-get update && apt-get install -y ffmpeg && rm -rf /var/lib/apt/lists/*
 
-# 3. تحديد مسار العمل
+# تحديد مسار العمل
 WORKDIR /app
 
-# 4. نسخ ملف المكتبات
+# نسخ ملف المكتبات وتحديث pip
 COPY requirements.txt .
+RUN pip install --no-cache-dir --upgrade pip
 
-# 5. تحديث pip وتثبيت setuptools و wheel (مهم جداً للتعامل مع الحزم المعقدة
-RUN pip install --no-cache-dir pyrogram pytgcalls yt-dlp supabase
-# 6. تثبيت المكتبات (الآن سيجد pip النسخة المتوافقة ويثبتها بسلاسة)
+# تثبيت المكتبات (الآن سيتم التثبيت بثوانٍ)
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 7. نسخ باقي ملفات المشروع
+# نسخ باقي ملفات المشروع
 COPY . .
 
-# 8. أمر تشغيل البوت
+# أمر تشغيل البوت
 CMD ["python", "bot.py"]
