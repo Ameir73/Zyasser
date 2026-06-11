@@ -1,7 +1,4 @@
-pyrogram>=2.0.0
-pytgcalls>=1.1.0
+pytgcalls>=3.0.0
+pyrogram>=2.0.106
 yt-dlp
 supabase
-aiohttp
-httpx
-tgcrypto
