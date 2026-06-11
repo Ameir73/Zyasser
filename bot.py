@@ -1,36 +1,22 @@
 import asyncio
 import aiohttp
 from aiohttp import web
-import time
-import unicodedata
 import re
-import io
-import difflib
-import requests
-import httpx  
-import math
 import logging
 import traceback
-import json
 import sys
 import os
 import random
 import yt_dlp
-from typing import Dict, Union
-from datetime import datetime
 from supabase import create_client, Client
 from pyrogram import Client as PyroClient, filters, idle
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
-from pyrogram.errors import UserAlreadyParticipant, UserNotParticipant
 from pytgcalls import PyTgCalls
-from pytgcalls.types import AudioPiped, Update
+from pytgcalls.types import MediaStream, Update  # ✅ تم التعديل هنا لقراءة النظام الجديد
 from pytgcalls.exceptions import NoActiveGroupCall
 
 # ==========================================
 # ⚙️ [ إعدادات البوت الأساسية (من بيئة التشغيل) ]
-# ==========================================
-# ==========================================
-# ⚙️ [ إعدادات البوت الأساسية (تسحب من بيئة التشغيل فقط) ]
 # ==========================================
 API_ID = int(os.environ.get("API_ID", 0))
 API_HASH = os.environ.get("API_HASH", "")
@@ -174,7 +160,8 @@ async def play_command(client, message: Message):
         if queue_len == 1:
             next_song = pop_next_in_queue(chat_id)
             try:
-                await call_py.play(chat_id, AudioPiped(next_song['path']))
+                # 1️⃣ تعديل الموضع الأول
+                await call_py.play(chat_id, MediaStream(next_song['path']))
                 await status_msg.edit_text(f"▶️ **تم بدء التشغيل:**\n🎵 `{next_song['title']}`")
             except NoActiveGroupCall:
                 await status_msg.edit_text("❌ عذراً، يجب على أحد المشرفين فتح المحادثة الصوتية (Voice Chat) أولاً.")
@@ -191,7 +178,8 @@ async def on_stream_end_handler(client, update: Update):
     next_song = pop_next_in_queue(chat_id)
     
     if next_song:
-        await call_py.play(chat_id, AudioPiped(next_song['path']))
+        # 2️⃣ تعديل الموضع الثاني
+        await call_py.play(chat_id, MediaStream(next_song['path']))
         await app.send_message(chat_id, f"▶️ **جاري تشغيل المقطع التالي:**\n🎵 `{next_song['title']}`")
     else:
         await call_py.leave_group_call(chat_id)
@@ -208,7 +196,8 @@ async def skip_track(client, message: Message):
 
     next_song = pop_next_in_queue(chat_id)
     if next_song:
-        await call_py.play(chat_id, AudioPiped(next_song['path']))
+        # 3️⃣ تعديل الموضع الثالث
+        await call_py.play(chat_id, MediaStream(next_song['path']))
         await message.reply_text(f"⏭️ **تم التخطي!**\n🎵 المقطع الحالي: `{next_song['title']}`")
     else:
         await call_py.leave_group_call(chat_id)
@@ -361,7 +350,7 @@ async def main_startup():
     logging.basicConfig(
         level=logging.INFO,
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        handlers=[
+        headers=[
             logging.StreamHandler(),
             TelegramLoggerHandler(app, OWNER_ID) 
         ]
@@ -384,14 +373,4 @@ async def main_startup():
     await start_bot_core()
 
 if __name__ == "__main__":
-    try:
-        asyncio.run(main_startup())
-    except KeyboardInterrupt:
-        print("🛑 تم إيقاف النظام يدوياً.")
-    except Exception as e:
-        print("\n" + "❌"*20)
-        print(f"💥 انهيار قاتل منع البوت من الإقلاع:")
-        print(f"{type(e).__name__}: {str(e)}")
-        traceback.print_exc()
-        print("❌"*20 + "\n")
-        logging.critical(f"💥 انهيار غير متوقع في النظام: {e}")
+    asyncio.run(main_startup())
