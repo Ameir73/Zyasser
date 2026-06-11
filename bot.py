@@ -14,7 +14,6 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message, CallbackQuery
 from pyrogram.errors import FloodWait, UserNotParticipant, ChatAdminRequired
-from pytgcalls import PyTgCalls, idle
 from pytgcalls.types import Update
 from pytgcalls.types.input_stream import AudioPiped
 from pytgcalls.types.stream import StreamAudioEnded
@@ -55,8 +54,7 @@ if not os.path.exists("downloads"):
 # ==========================================
 app = PyroClient("MusicBot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 assistant = None
-call_py = pytgcalls.PyTgCalls(assistant)
-
+call_py = None
 # ==========================================
 # 📢 [ كلاس إرسال الأخطاء للتليجرام ]
 # ==========================================
