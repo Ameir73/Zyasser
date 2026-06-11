@@ -1,7 +1,7 @@
-# استخدام نسخة بايثون خفيفة ومستقرة ونظام حديث (Bookworm)
-FROM python:3.10-slim-bookworm
+# 1. إجبار الدوكر على استخدام معمارية x86_64 القياسية لتجاوز مشكلة توافق tgcalls
+FROM --platform=linux/amd64 python:3.10-slim-bookworm
 
-# تحديث النظام وتثبيت أداة ffmpeg بالإضافة إلى أدوات البناء الأساسية
+# 2. تحديث النظام وتثبيت أداة ffmpeg الضرورية وأدوات التجميع
 RUN apt-get update && apt-get install -y \
     ffmpeg \
     gcc \
@@ -9,20 +9,20 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-# تحديد مسار العمل داخل الحاوية
+# 3. تحديد مسار العمل
 WORKDIR /app
 
-# نسخ ملف المكتبات وتثبيتها
+# 4. نسخ ملف المكتبات
 COPY requirements.txt .
 
-# تحديث أداة pip أولاً لتجنب أخطاء تعارض المكتبات
-RUN pip install --no-cache-dir --upgrade pip
+# 5. تحديث pip وتثبيت setuptools و wheel (مهم جداً للتعامل مع الحزم المعقدة)
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel
 
-# تثبيت المكتبات (سيتم الآن بناء tgcalls بنجاح)
+# 6. تثبيت المكتبات (الآن سيجد pip النسخة المتوافقة ويثبتها بسلاسة)
 RUN pip install --no-cache-dir -r requirements.txt
 
-# نسخ باقي ملفات المشروع إلى السيرفر
+# 7. نسخ باقي ملفات المشروع
 COPY . .
 
-# أمر تشغيل البوت الرسمي
+# 8. أمر تشغيل البوت
 CMD ["python", "bot.py"]
