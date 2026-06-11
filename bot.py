@@ -16,7 +16,6 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message, 
 from pyrogram.errors import FloodWait, UserNotParticipant, ChatAdminRequired
 from yt_dlp import YoutubeDL
 from functools import wraps
-import config
 from pytgcalls.exceptions import NoActiveGroupCall
 from pyrogram import Client
 from pytgcalls import PyTgCalls
