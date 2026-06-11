@@ -1,6 +1,6 @@
 import asyncio
 import aiohttp
-from aiohttp import web
+import tgcalls
 import re
 import logging
 import traceback
@@ -8,7 +8,6 @@ import sys
 import os
 import random
 import yt_dlp
-import pytgcalls
 from supabase import create_client, Client
 from pyrogram import Client as PyroClient, filters, idle
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
