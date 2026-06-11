@@ -8,6 +8,7 @@ import sys
 import os
 import random
 import yt_dlp
+import pytgcalls
 from supabase import create_client, Client
 from pyrogram import Client as PyroClient, filters, idle
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
@@ -36,7 +37,7 @@ if not os.path.exists("downloads"):
 # ==========================================
 app = PyroClient("MusicBot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 assistant = None
-call_py = None
+call_py = pytgcalls.PyTgCalls(assistant)
 
 # ==========================================
 # 📢 [ كلاس إرسال الأخطاء للتليجرام ]
