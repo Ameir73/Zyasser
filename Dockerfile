@@ -1,5 +1,5 @@
 # 1. إجبار الدوكر على استخدام معمارية x86_64 القياسية لتجاوز مشكلة توافق tgcalls
-FROM --platform=linux/amd64 python:3.10-slim-bookworm
+FROM --platform=linux/amd64 python:3.11-slim-bookworm
 
 # 2. تحديث النظام وتثبيت أداة ffmpeg الضرورية وأدوات التجميع
 RUN apt-get update && apt-get install -y \
@@ -16,7 +16,7 @@ WORKDIR /app
 COPY requirements.txt .
 
 # 5. تحديث pip وتثبيت setuptools و wheel (مهم جداً للتعامل مع الحزم المعقدة
-RUN pip install --no-cache-dir pyrogram==2.0.106 pytgcalls>=3.0.0 yt-dlp supabase
+RUN pip install --no-cache-dir pyrogram pytgcalls yt-dlp supabase
 # 6. تثبيت المكتبات (الآن سيجد pip النسخة المتوافقة ويثبتها بسلاسة)
 RUN pip install --no-cache-dir -r requirements.txt
 
